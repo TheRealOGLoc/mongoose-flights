@@ -3,13 +3,10 @@
 
 <% flights.forEach(function(flight) {%>
     <h2>Flight:</h2>
-    <%= flight.airline %>
+    Airline: <%= flight.airline %>
     <br>
-    <%= flight.airport %>
+    Airport: <%= flight.airport %>
     <br>
-    <%= flight.flightNo %>
-    <br>
-    <%= flight.departs.toLocaleString()%>
     <a href=<%=`/flights/${flight._id}`%>>Details</a>
     <hr>
     

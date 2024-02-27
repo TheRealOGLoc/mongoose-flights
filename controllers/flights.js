@@ -6,6 +6,26 @@ function newFlight(req, res, next) {
     })
 }
 
+async function addDes(req, res, next) {
+    const flight = await Flight.findById(req.params.id)
+    try {
+        console.log(req.body)
+        flight.destinations.push(req.body);
+        await flight.save();
+    } catch(err) {
+        console.log(err)
+    }
+    res.redirect(`${flight._id}`);
+}
+
+async function detail(req, res, next) {
+    const flight = await Flight.findById(req.params.id);
+    res.render(`flights/detail`, {
+        title: 'Detail',
+        flight
+    })
+}
+
 async function show(req, res, next) {
     const flights = await Flight.find({});
     res.render('flights/show', {
@@ -34,5 +54,7 @@ async function create(req, res, next) {
 module.exports = {
     new: newFlight,
     create,
-    show
+    show,
+    detail,
+    addDes
 }
