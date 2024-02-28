@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+
+<h2>All Tickets</h2>
+<% if (tickets.length) {%>
+    <% tickets.forEach(function(ticket) { %>
+        <div> - Seat: <%= ticket.seat %>, <%= ticket.price %></div>
+    <% }) %>
+<% } else { %>
+    <div>No Tickets Yet</div>
+<% } %>
+
+
+<h2>Add Ticket</h2>
+
+<form method="POST">
+    <label>Seat(A1 to F99):</label>
+    <input name="seat" required pattern="[A-F][1-9]\d?">
+    <label>Price</label>
+    <input name="price">
+    <input type="submit">
+</form>
+
+<%- include('../partials/footer') %>

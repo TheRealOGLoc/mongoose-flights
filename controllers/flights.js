@@ -1,4 +1,5 @@
 const Flight = require('../models/flight');
+const Ticket = require('../models/ticket');
 
 function newFlight(req, res, next) {
     res.render('flights/new', {
@@ -9,20 +10,21 @@ function newFlight(req, res, next) {
 async function addDes(req, res, next) {
     const flight = await Flight.findById(req.params.id)
     try {
-        console.log(req.body)
         flight.destinations.push(req.body);
         await flight.save();
     } catch(err) {
         console.log(err)
     }
-    res.redirect(`${flight._id}`);
+    res.redirect(`/flights/${flight._id}`);
 }
 
 async function detail(req, res, next) {
-    const flight = await Flight.findById(req.params.id);
+    const flight = await Flight.findById(req.params.id).populate('tickets');
+    const tickets = await Ticket.find({})
     res.render(`flights/detail`, {
         title: 'Detail',
-        flight
+        flight,
+        tickets
     })
 }
 

@@ -8,9 +8,29 @@ Airport: <%= flight.airport %>
 Flight No.: <%= flight.flightNo %>
 <br>
 Flight Time: <%= flight.departs %>
+<br>
+Tickets:
+<ul><% flight.tickets.forEach(function(ticket) { %></ul>
+    <li>-<%= ticket.seat + " "  + ticket.price + "$"%>-</li>
+<% }) %>
+
+<h3>Tickets</h3>
+<% if (tickets.length) {%>
+    <form method="POST" action="/flights/<%= flight._id %>/ticket">
+        <select name="ticketID">
+            <% tickets.forEach(function(ticket) { %>
+                <option value=<%= ticket._id %>> Seat: <%= ticket.seat %> - Price: <%= ticket.price %>$ </option>
+            <% }) %>
+        </select>
+        <input type="submit" value="Add Ticket">
+    </form>
+<% } else { %>
+    <div>Not ticket yet</div>
+<% } %>
+
 <hr>
 <h3>Add Destination</h3>
-<form action="" method="POST">
+<form action="/flights/<%= flight._id %>/destination" method="POST">
     <label>Airport</label>
     <select name="airport">
         <option value="AUS">AUS</option>
@@ -20,9 +40,12 @@ Flight Time: <%= flight.departs %>
         <option value="SAN">SAN</option>
     </select>
     <label>Arrial</label>
-    <input type="datetime-local" name="arrival">
-    <input type="submit">
+    <input type="datetime-local" name="arrival" required>
+    <input type="submit" value="Add Destination">
 </form>
+
+
+
 <h3>Destinations</h3>
 <ul>
     <% if(flight.destinations.length) { %>
@@ -30,6 +53,8 @@ Flight Time: <%= flight.departs %>
             <li><%= des.airport %> - <%= des.arrival %></li>
             <br>
         <%})%>
-    <% } %>
+    <% } else {%>
+        <li> No destinations yet </li>
+        <% } %>
 </ul>
 <%- include('../partials/footer') %>

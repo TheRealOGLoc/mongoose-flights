@@ -31,7 +31,11 @@ const flightSchema = new Schema({
         type: Date,
         default: new Date().getFullYear()
     },
-    destinations: [destinationSchema]
+    destinations: [destinationSchema],
+    tickets: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Ticket'
+    }]
 })
 
 module.exports = mongoose.model('Flight', flightSchema);
